@@ -2,20 +2,20 @@ package com.aa.act.interview.org;
 
 public class Employee {
 
-	private int identifier;
+	private String identifier;
 	private Name name;
 
-	public Employee(int identifier, Name name) {
+	public Employee(String identifier, Name name) {
 		if(name == null)
 			throw new IllegalArgumentException("name cannot be null");
 		this.identifier = identifier;
 		this.name = name;
 	}
-	
-	public int getIdentifier() {
+
+	public String getIdentifier() {
 		return identifier;
 	}
-	
+
 	public Name getName() {
 		return name;
 	}

@@ -1,6 +1,7 @@
 package com.aa.act.interview.org;
 
 import java.util.Optional;
+import java.util.UUID;
 
 public abstract class Organization {
 
@@ -20,7 +21,29 @@ public abstract class Organization {
 	 * @return the newly filled position or empty if no position has that title
 	 */
 	public Optional<Position> hire(Name person, String title) {
-		//your code here
+		Optional<Position> optPosition = Optional.empty();
+
+		Employee employee = new Employee(UUID.randomUUID().toString(), person);
+		Optional<Position> matchingPosition = findMatchingPosition(root, title);
+		if(matchingPosition.isPresent()) {
+			matchingPosition.get().setEmployee(Optional.of(employee));
+			optPosition = matchingPosition;
+		}
+
+		return optPosition;
+	}
+	private Optional<Position> findMatchingPosition(Position position, String title) {
+		if(position.getTitle().equals(title)) {
+			return Optional.of(position);
+		} else {
+			for(Position pos : position.getDirectReports()) {
+				Optional<Position> matchingPos = findMatchingPosition(pos, title);
+				if(matchingPos.isPresent()) {
+					return matchingPos;
+				}
+			}
+		}
+
 		return Optional.empty();
 	}
 
